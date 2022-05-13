@@ -11,6 +11,10 @@ const favoriteStorySchema = new Schema(
   }
 );
 
-const FavoriteStory = model('FavoriteStory', favoriteStorySchema);
+const FavoriteStory = model(
+  'FavoriteStory',
+  favoriteStorySchema,
+  'favorite_story'
+);
 
 module.exports = FavoriteStory;

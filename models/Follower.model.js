@@ -19,6 +19,6 @@ const followerSchema = new Schema(
   }
 );
 
-const Follower = model('Follower', followerSchema);
+const Follower = model('Follower', followerSchema, 'follower');
 
 module.exports = Follower;

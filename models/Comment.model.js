@@ -33,6 +33,6 @@ commentSchema.methods.setCommentIdAndLastParentComment = function () {
   this.parentsComments.push(id);
 };
 
-const Comment = model('Comment', commentSchema);
+const Comment = model('Comment', commentSchema, 'comment');
 
 module.exports = Comment;

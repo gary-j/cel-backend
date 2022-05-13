@@ -22,6 +22,6 @@ const professionalSchema = new Schema(
   }
 );
 
-const Professional = model('Professional', professionalSchema);
+const Professional = model('Professional', professionalSchema, 'professional');
 
 module.exports = Professional;

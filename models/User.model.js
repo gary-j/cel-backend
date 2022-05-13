@@ -35,7 +35,7 @@ const userSchema = new Schema(
     },
     dateOfBirth: {
       type: Date,
-      required: true,
+      // required: true,
       trim: true,
     },
     profilePictureUrl: String,
@@ -47,13 +47,13 @@ const userSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: 'Theme',
-        maxlength: 3,
         required: true,
       },
     ],
     mostActiveThemes: [
       {
-        type: Schema.Types.ObjectId,
+        // type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Theme',
         maxlength: 3,
       },
@@ -73,13 +73,17 @@ const userSchema = new Schema(
     isPrivate: {
       type: Boolean,
       default: false,
-      required: true,
+      // required: true,
     },
     isRegistered: {
       type: Boolean,
       default: false,
     },
     isModerator: {
+      type: Boolean,
+      default: false,
+    },
+    isAdmin: {
       type: Boolean,
       default: false,
     },
@@ -102,6 +106,30 @@ const userSchema = new Schema(
   }
 );
 
-const User = model('User', userSchema);
+userSchema.pre('save', function () {
+  this.setThreeThemesMax();
+});
+
+// les autres parentComment IDs sont spread(...) via le controller au Create
+userSchema.methods.setThreeThemesMax = function () {
+  if (this.selectedThemes.length > 3) {
+    console.log(
+      'il y a plus de 3 selections',
+      this.selectedThemes,
+      ': longueur: ',
+      this.selectedThemes.length
+    );
+    // this.selectedThemes.slice(1, 3);
+  }
+};
+
+userSchema.path('selectedThemes').validate(function (value) {
+  console.log(value.length, ': longueur');
+  if (value.length > 3) {
+    throw new Error('Vous devez choisir 3 themes au maximum');
+  }
+});
+
+const User = model('User', userSchema, 'user');
 
 module.exports = User;
