@@ -1,0 +1,25 @@
+const { Schema, model, mongoose } = require('mongoose');
+const slug = require('mongoose-slug-generator');
+mongoose.plugin(slug);
+
+const themeSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    slug: {
+      type: String,
+      slug: 'name',
+    },
+  },
+  {
+    // this second object adds extra properties: `createdAt` and `updatedAt`
+    timestamps: true,
+  }
+);
+
+const Theme = model('Theme', themeSchema);
+
+module.exports = Theme;
