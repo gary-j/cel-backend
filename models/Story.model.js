@@ -55,6 +55,6 @@ const storySchema = new Schema(
   }
 );
 
-const Story = model('Story', storySchema);
+const Story = model('Story', storySchema, 'story');
 
 module.exports = Story;

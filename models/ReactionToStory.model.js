@@ -15,6 +15,10 @@ const reactionToStorySchema = new Schema(
   }
 );
 
-const ReactionToStory = model('ReactionToStory', reactionToStorySchema);
+const ReactionToStory = model(
+  'ReactionToStory',
+  reactionToStorySchema,
+  'reaction_to_story'
+);
 
 module.exports = ReactionToStory;

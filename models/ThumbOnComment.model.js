@@ -19,6 +19,10 @@ const thumbOnCommentSchema = new Schema(
   }
 );
 
-const ThumbOnComment = model('ThumbOnComment', thumbOnCommentSchema);
+const ThumbOnComment = model(
+  'ThumbOnComment',
+  thumbOnCommentSchema,
+  'thumb_on_comment'
+);
 
 module.exports = ThumbOnComment;

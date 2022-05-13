@@ -20,6 +20,6 @@ const bodypartSchema = new Schema(
   }
 );
 
-const BodyPart = model('BodyPart', bodypartSchema);
+const BodyPart = model('BodyPart', bodypartSchema, 'body_part');
 
 module.exports = BodyPart;

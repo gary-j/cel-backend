@@ -20,6 +20,6 @@ const themeSchema = new Schema(
   }
 );
 
-const Theme = model('Theme', themeSchema);
+const Theme = model('Theme', themeSchema, 'theme');
 
 module.exports = Theme;

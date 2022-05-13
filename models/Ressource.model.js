@@ -34,6 +34,6 @@ const ressourceSchema = new Schema(
   }
 );
 
-const Ressource = model('Ressource', ressourceSchema);
+const Ressource = model('Ressource', ressourceSchema, 'ressource');
 
 module.exports = Ressource;
