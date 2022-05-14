@@ -4,6 +4,11 @@ const jsonwebtoken = require('jsonwebtoken');
 const User = require('../models/User.model');
 const { SignAndLogErrors } = require('../error-handling/SignAndLogErrors');
 
+const signup_get = async (req, res, next) => {
+  console.log('access to sign up route');
+  res.status(200).json({ message: 'access to sign up route' });
+};
+//
 const signup_post = async (req, res, next) => {
   try {
     const {
@@ -129,4 +134,4 @@ const signup_post = async (req, res, next) => {
   }
 };
 
-module.exports = { signup_post };
+module.exports = { signup_post, signup_get };
