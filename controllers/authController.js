@@ -133,5 +133,82 @@ const signup_post = async (req, res, next) => {
     }
   }
 };
+//
+const signin_get = async (req, res, next) => {
+  console.log('access to sign in route');
+  res.status(200).json({ message: 'access to sign in route' });
+};
+//
+const signin_post = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
 
-module.exports = { signup_post, signup_get };
+    // Use regex to validate the email format
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(email)) {
+      const error = SignAndLogErrors('email', email);
+      res.status(406).json(error);
+      return;
+    }
+
+    const foundUser = await User.findOne({ email });
+
+    if (!foundUser) {
+      const error = SignAndLogErrors('notFound', email);
+      console.log(error, 'USER NOT FOUND');
+      res.status(401).json(error);
+      return;
+    }
+
+    if (bcrypt.compareSync(password, foundUser.password)) {
+      const payload = {
+        id: foundUser._id,
+        email: foundUser.email,
+        username: foundUser.username,
+        isAdmin: foundUser.isAdmin,
+      };
+
+      const authToken = jsonwebtoken.sign(payload, process.env.TOKEN_SECRET, {
+        algorithm: 'HS256',
+        expiresIn: '2d',
+      });
+
+      res.status(200).send({
+        authToken: authToken,
+        message: 'login ok du back end',
+      });
+      return;
+    } else {
+      const error = SignAndLogErrors('wrong', email);
+      res.status(401).json(error);
+      return;
+    }
+  } catch (error) {
+    next(error);
+    return;
+  }
+};
+//
+// If User change password, we have to blacklist the old token,
+// Because it can be still valid and could be used on other clients
+const signout_post = async (req, res, next) => {
+  // The JWT is stored on browser, so remove the token deleting the cookie at client side
+  // JWT is stateless, which means you can store everything you need in the payload and skip executing a DB query on every request.
+  /* 
+    If you want to restrict the usage of a token when a user logs out. simply follow these 4 bullet points:
+
+      • Set a reasonable expiration time on tokens
+      • Delete the stored token from client-side upon log out
+      • Have DB of no longer active tokens that still have some time to live
+      • Query provided token against The Blacklist on every authorized request 
+  */
+};
+//
+module.exports = {
+  signup_post,
+  signup_get,
+  signin_get,
+  signin_post,
+  signout_post,
+};
