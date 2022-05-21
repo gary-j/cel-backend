@@ -118,13 +118,12 @@ const signup_post = async (req, res, next) => {
 
     res
       .status(201)
-      .json({ authToken: authToken, message: 'Welcome ! You Signed up.' });
+      .json({ authToken: authToken, message: 'Welcome ! You Signed up :) ' });
   } catch (error) {
     console.log(': validator : ', error._message);
     if (error._message === 'User validation failed') {
       res.status(406).json({
-        message:
-          'Enregistrement impossible en base de données, vérifiez que vos données respectent les modèles de schemas',
+        message: 'Vous devez choisir 3 thèmes.',
       });
     } else {
       console.log(error, 'error au sign up');
