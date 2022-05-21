@@ -125,7 +125,7 @@ userSchema.methods.setThreeThemesMax = function () {
 
 userSchema.path('selectedThemes').validate(function (value) {
   console.log(value.length, ': longueur');
-  if (value.length > 3) {
+  if (value.length !== 3) {
     throw new Error('Vous devez choisir 3 themes au maximum');
   }
 });
