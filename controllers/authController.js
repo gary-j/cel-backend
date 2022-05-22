@@ -204,10 +204,23 @@ const signout_post = async (req, res, next) => {
   */
 };
 //
+const verify_get = async (req, res, next) => {
+  try {
+    console.log(req.headers, '-----------------------HEADERS');
+    console.log(req?.payload?.email, '-------------------jwt');
+    res.status(200).json(req?.payload);
+  } catch (error) {
+    console.log(Object.keys(error), 'les clefs errors');
+    next(error);
+    return;
+  }
+};
+//
 module.exports = {
   signup_post,
   signup_get,
   signin_get,
   signin_post,
   signout_post,
+  verify_get,
 };
