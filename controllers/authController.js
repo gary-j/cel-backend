@@ -105,7 +105,7 @@ const signup_post = async (req, res, next) => {
     console.log(createdUser, 'new user');
 
     const payload = {
-      _id: createdUser._id,
+      id: createdUser._id,
       username: createdUser.username,
       email: createdUser.email,
       isAdmin: createdUser.isAdmin,
@@ -140,6 +140,7 @@ const signin_get = async (req, res, next) => {
 //
 const signin_post = async (req, res, next) => {
   try {
+    console.log('*** /signin_post - OK *** : ');
     const { email, password } = req.body;
 
     // Use regex to validate the email format
@@ -206,16 +207,25 @@ const signout_post = async (req, res, next) => {
 //
 const verify_get = async (req, res, next) => {
   try {
-    console.log(req.headers, '-----------------------HEADERS');
-    console.log(req?.payload?.email, '-------------------jwt');
-    res.status(200).json(req?.payload);
+    // console.log(req.headers, '-----------------------HEADERS');
+    // req.decoded est ajouté par le jwt middleware
+    console.log(
+      '*** verify_get with decoded.authenticated = boolean *** : ',
+      req?.decoded
+    );
+    if (req.decoded.authenticated === true) {
+      res.status(200).json({
+        authenticated: true,
+        message: 'user logged in, valid token',
+      });
+    }
   } catch (error) {
     console.log(Object.keys(error), 'les clefs errors');
     next(error);
     return;
   }
 };
-//
+// //
 module.exports = {
   signup_post,
   signup_get,

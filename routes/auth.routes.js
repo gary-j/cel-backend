@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const authController = require('../controllers/authController');
+const { isAuthenticated } = require('../middleware/jwt.middleware');
+
 //
 router.get('/signup', authController.signup_get);
 
