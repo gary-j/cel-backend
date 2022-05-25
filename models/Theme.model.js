@@ -13,6 +13,9 @@ const themeSchema = new Schema(
       type: String,
       slug: 'name',
     },
+    svg_title: {
+      type: String,
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
