@@ -10,6 +10,10 @@ require('./db');
 const express = require('express');
 
 const app = express();
+// test heroku
+const cool = require('cool-ascii-faces');
+app.get('/cool', (req, res) => res.send(cool()));
+// fin test heroku
 
 // const { isAuthenticated } = require('./middleware/jwt.middleware');
 
