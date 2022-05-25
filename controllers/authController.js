@@ -120,8 +120,11 @@ const signup_post = async (req, res, next) => {
       .status(201)
       .json({ authToken: authToken, message: 'Welcome ! You Signed up :) ' });
   } catch (error) {
-    console.log(': validator : ', error._message);
+    console.log('*** catch(error), signup_post *** ', error._message);
+    //
     if (error._message === 'User validation failed') {
+      console.log(': validator : ', error._message);
+      //
       res.status(406).json({
         message: 'Vous devez choisir 3 thèmes.',
       });

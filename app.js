@@ -26,6 +26,9 @@ app.use('/api', allRoutes);
 const authRoutes = require('./routes/auth.routes');
 app.use('/api/auth', authRoutes);
 
+const themeRoutes = require('./routes/theme.routes');
+app.use('/api/theme', themeRoutes);
+
 // const adminRoutes = require('./routes/admin.routes');
 // app.use('/api/admin', isAuthenticated, adminRoutes);
 
