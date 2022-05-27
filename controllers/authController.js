@@ -102,7 +102,7 @@ const signup_post = async (req, res, next) => {
           'Enregistrement en base de donnée impossible, vérifier tous les champs',
       });
     }
-    console.log(createdUser, 'new user');
+    console.log('*** New user Created, from DB *** : ', createdUser);
 
     const payload = {
       id: createdUser._id,
