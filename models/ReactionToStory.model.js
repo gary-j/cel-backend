@@ -6,7 +6,7 @@ const reactionToStorySchema = new Schema(
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     reaction: {
       type: String,
-      enum: ['like', 'same', 'solidarity', 'wow', 'plume'],
+      enum: ['thumb', 'heart', 'smile', 'party', 'plume'],
       required: true,
     },
   },

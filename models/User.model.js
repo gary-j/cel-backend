@@ -66,6 +66,10 @@ const userSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Follower',
     },
+    stayConnected: {
+      type: Boolean,
+      default: false,
+    },
     isRegistered: {
       type: Boolean,
       default: false,
