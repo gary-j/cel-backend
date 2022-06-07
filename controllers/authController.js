@@ -217,10 +217,12 @@ const verify_get = async (req, res, next) => {
       req?.decoded
     );
     if (req.decoded.authenticated === true) {
-      res.status(200).json({
+      let user = {
+        ...req.decoded,
         authenticated: true,
         message: 'user logged in, valid token',
-      });
+      };
+      res.status(200).json(user);
     }
   } catch (error) {
     console.log(Object.keys(error), 'les clefs errors');
