@@ -24,7 +24,7 @@ const isAuthenticated = (req, res, next) => {
       // 2.
       jwt.verify(token, SECRET, function (error, decoded) {
         //
-        console.log('*** error jwt.verify ***');
+        console.log('*** jwt.verify ***');
         //
         if (error?.name === 'TokenExpiredError' || error !== null) {
           console.log('*** Il y a une erreur *** : ', error);
@@ -40,6 +40,9 @@ const isAuthenticated = (req, res, next) => {
 
           decoded.authenticated = true;
           // delete decoded.isAdmin;
+          delete decoded.email;
+          delete decoded.iat;
+          delete decoded.exp;
 
           // 3. J'ajoute l'objet decoded à la requete
           // pour y avoir acces dans la route suivante - 'Next()'
