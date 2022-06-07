@@ -23,7 +23,12 @@ module.exports = (app) => {
   app.use(
     cors({
       credentials: true,
-      origin: process.env.ORIGIN || 'http://localhost:3000',
+      origin: [
+        process.env.ORIGIN,
+        process.env.ORIGIN2,
+        process.env.ORIGIN3,
+        process.env.ORIGIN4,
+      ],
     })
   );
 
