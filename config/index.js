@@ -22,6 +22,8 @@ module.exports = (app) => {
   // controls a very specific header to pass headers from the frontend
   const whitelist = [
     process.env.ORIGIN,
+    'https://citronenlimonade.com',
+    'https://citronenlimonade.fr',
     process.env.ORIGIN2,
     process.env.ORIGIN3,
     process.env.ORIGIN4,
