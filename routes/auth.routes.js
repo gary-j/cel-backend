@@ -3,6 +3,8 @@ const authController = require('../controllers/authController');
 const { isAuthenticated } = require('../middleware/jwt.middleware');
 
 //
+router.post('/preSignup', authController.preSignup_post);
+
 router.get('/signup', authController.signup_get);
 
 router.post('/signup', authController.signup_post);
