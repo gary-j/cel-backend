@@ -9,6 +9,95 @@ const signup_get = async (req, res, next) => {
   res.status(200).json({ message: 'access to sign up route' });
 };
 //
+const preSignup_post = async (req, res, next) => {
+  try {
+    const { username, email, password } = req.body;
+
+    // Check if email or password or name are provided as empty string
+
+    if (email === '' || username === '' || password === '') {
+      const error = SignAndLogErrors('none', email, username);
+      res.status(406).json({ isValid: false, error });
+
+      return;
+    }
+
+    // Check if email or password or username contains whitespace \s
+
+    if (
+      email.includes(' ') ||
+      password.includes(' ') ||
+      username.includes(' ')
+    ) {
+      const error = SignAndLogErrors('whiteSpace', email, username);
+      if (password.includes(' ')) {
+        error.input = 'password';
+      } else if (email.includes(' ')) {
+        error.input = 'email';
+      } else if (username.includes(' ')) {
+        error.input = 'username';
+      }
+      res.status(406).json({ isValid: false, error });
+      return;
+    }
+    // Use regex to validate the email format
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(email)) {
+      const error = SignAndLogErrors('email', email, username);
+      error.input = 'email';
+      res.status(406).json({ isValid: false, error });
+      return;
+    }
+
+    const passwordRegex = /.{6,}/;
+    if (!passwordRegex.test(password)) {
+      const error = SignAndLogErrors('password');
+      error.input = 'password';
+      res.status(406).json({ isValid: false, error });
+      return;
+    }
+
+    // const foundUser = await User.findOne({ email });
+
+    const foundUser = await User.find({
+      // résultat = renvoi un tableau d'object
+      $or: [{ email: email }, { username: username }],
+    });
+
+    if (foundUser.length > 0) {
+      console.log(foundUser, ': user found');
+      if (foundUser[0].email === email) {
+        const error = SignAndLogErrors('existEmail', email, '');
+        error.input = 'email';
+
+        res.status(406).json({ isValid: false, error });
+        return;
+      } else if (foundUser[0].username === username) {
+        const error = SignAndLogErrors('existUsername', '', username);
+        error.input = 'username';
+
+        res.status(406).json({ isValid: false, error });
+        return;
+      } else {
+        res.status(500).json({
+          isValid: false,
+          message: 'Une erreur est survenue. Merci de réessayer.',
+        });
+        return;
+      }
+    }
+    res.status(200).json({
+      isValid: true,
+      message: 'tous les champs du formulaire sont valides',
+    });
+  } catch (error) {
+    console.log(error, 'error au pre sign up');
+    next(error);
+    return;
+  }
+};
+//
 const signup_post = async (req, res, next) => {
   try {
     const {
@@ -20,7 +109,7 @@ const signup_post = async (req, res, next) => {
       dateOfBirth,
       selectedThemes,
     } = req.body;
-
+    console.log('***signup_post date of birth *** : ', dateOfBirth);
     // Check if email or password or name are provided as empty string
 
     if (email === '' || username === '' || password === '') {
@@ -232,6 +321,7 @@ const verify_get = async (req, res, next) => {
 };
 // //
 module.exports = {
+  preSignup_post,
   signup_post,
   signup_get,
   signin_get,
