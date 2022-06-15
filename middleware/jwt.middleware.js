@@ -40,7 +40,7 @@ const isAuthenticated = (req, res, next) => {
 
           decoded.authenticated = true;
           // delete decoded.isAdmin;
-          delete decoded.email;
+          // delete decoded.email;
           delete decoded.iat;
           delete decoded.exp;
 
