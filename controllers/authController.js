@@ -16,7 +16,7 @@ const preSignup_post = async (req, res, next) => {
     // Check if email or password or name are provided as empty string
 
     if (email === '' || username === '' || password === '') {
-      const error = SignAndLogErrors('none', email, username);
+      const error = SignAndLogErrors('none', email, username, password);
       res.status(406).json({ isValid: false, error });
 
       return;
@@ -29,14 +29,8 @@ const preSignup_post = async (req, res, next) => {
       password.includes(' ') ||
       username.includes(' ')
     ) {
-      const error = SignAndLogErrors('whiteSpace', email, username);
-      if (password.includes(' ')) {
-        error.input = 'password';
-      } else if (email.includes(' ')) {
-        error.input = 'email';
-      } else if (username.includes(' ')) {
-        error.input = 'username';
-      }
+      const error = SignAndLogErrors('whiteSpace', email, username, password);
+
       res.status(406).json({ isValid: false, error });
       return;
     }
@@ -45,7 +39,6 @@ const preSignup_post = async (req, res, next) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailRegex.test(email)) {
       const error = SignAndLogErrors('email', email, username);
-      error.input = 'email';
       res.status(406).json({ isValid: false, error });
       return;
     }
@@ -53,7 +46,6 @@ const preSignup_post = async (req, res, next) => {
     const passwordRegex = /.{6,}/;
     if (!passwordRegex.test(password)) {
       const error = SignAndLogErrors('password');
-      error.input = 'password';
       res.status(406).json({ isValid: false, error });
       return;
     }
@@ -69,13 +61,11 @@ const preSignup_post = async (req, res, next) => {
       console.log(foundUser, ': user found');
       if (foundUser[0].email === email) {
         const error = SignAndLogErrors('existEmail', email, '');
-        error.input = 'email';
 
         res.status(406).json({ isValid: false, error });
         return;
       } else if (foundUser[0].username === username) {
         const error = SignAndLogErrors('existUsername', '', username);
-        error.input = 'username';
 
         res.status(406).json({ isValid: false, error });
         return;
