@@ -2,11 +2,21 @@ module.exports.SignAndLogErrors = (
   errMessage,
   email = '',
   username = '',
-  password = ''
+  password = '',
+  lastname = '',
+  firstname = '',
+  dateOfBirth = ''
 ) => {
   console.log('USER INPUT', username, email);
 
-  let errors = { username: '', email: '', password: '', message: '' };
+  let errors = {
+    username: '',
+    email: '',
+    password: '',
+    message: '',
+    lastname: '',
+    firstname: '',
+  };
 
   if (errMessage === 'none') {
     console.log('***Sign and log error NONE password *** : ', password);
@@ -16,10 +26,18 @@ module.exports.SignAndLogErrors = (
       errors.input = 'email';
     } else if (username === '') {
       errors.input = 'username';
+    } else if (lastname === '') {
+      errors.input = 'lastname';
+    } else if (firstname === '') {
+      errors.input = 'firstname';
+    } else if (dateOfBirth === '') {
+      errors.input = 'dateOfBirth';
     }
     errors.message = `Merci de fournir un ${errors.input}`;
     errors.username = username;
     errors.email = email;
+    errors.lastname = lastname;
+    errors.firstname = firstname;
   }
   if (errMessage === 'whiteSpace') {
     if (password.includes(' ')) {
@@ -29,30 +47,30 @@ module.exports.SignAndLogErrors = (
     } else if (username.includes(' ')) {
       errors.input = 'username';
     }
-    errors.message = `${errors.input} can not contains white space`;
+    errors.message = `${errors.input} Ne peut pas contenir d'espace`;
     errors.username = username;
     errors.email = email;
   }
   if (errMessage === 'email') {
-    errors.message = ` "${email}" is not a valid email address.`;
+    errors.message = ` "${email}" n'est pas une adresse e-mail valide.`;
     errors.username = username;
     errors.email = email;
     errors.input = 'email';
   }
 
   if (errMessage === 'password') {
-    errors.message = 'Password must have at least 6 characters.';
+    errors.message = 'Le mot de passe doit contenir au moins 6 caractères';
     errors.input = 'password';
   }
 
   if (errMessage === 'existEmail') {
-    errors.message = ` User with this email address already exist. ("${email}") `;
+    errors.message = `Cette adresse email est déjà utilisée. ("${email}") `;
     errors.email = email;
     errors.input = 'email';
   }
 
   if (errMessage === 'existUsername') {
-    errors.message = ` User with this username already exist. ("${username}") `;
+    errors.message = `("${username}") est déjà pris`;
     errors.username = username;
     errors.input = 'username';
   }

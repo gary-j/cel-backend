@@ -11,18 +11,34 @@ const signup_get = async (req, res, next) => {
 //
 const preSignup_post = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { lastname, firstname, username, email, password, dateOfBirth } =
+      req.body;
 
-    // Check if email or password or name are provided as empty string
+    // Check if credentials or name are provided as empty string
 
-    if (email === '' || username === '' || password === '') {
-      const error = SignAndLogErrors('none', email, username, password);
+    if (
+      lastname === '' ||
+      firstname === '' ||
+      email === '' ||
+      username === '' ||
+      password === '' ||
+      dateOfBirth === ''
+    ) {
+      const error = SignAndLogErrors(
+        'none',
+        email,
+        username,
+        password,
+        lastname,
+        firstname,
+        dateOfBirth
+      );
       res.status(406).json({ isValid: false, error });
 
       return;
     }
 
-    // Check if email or password or username contains whitespace \s
+    // Check if credentials or username contains whitespace \s
 
     if (
       email.includes(' ') ||
@@ -100,16 +116,29 @@ const signup_post = async (req, res, next) => {
       selectedThemes,
     } = req.body;
     console.log('***signup_post date of birth *** : ', dateOfBirth);
-    // Check if email or password or name are provided as empty string
+    // Check if credentials are provided as empty string
 
-    if (email === '' || username === '' || password === '') {
-      const error = SignAndLogErrors('none', email, username);
+    if (
+      lastname === '' ||
+      firstname === '' ||
+      email === '' ||
+      username === '' ||
+      password === ''
+    ) {
+      const error = SignAndLogErrors(
+        'none',
+        email,
+        username,
+        password,
+        lastname,
+        firstname
+      );
       res.status(406).json(error);
 
       return;
     }
 
-    // Check if email or password or username contains whitespace \s
+    // Check if credentials contains whitespace \s
 
     if (
       email.includes(' ') ||
@@ -204,9 +233,9 @@ const signup_post = async (req, res, next) => {
     if (error._message === 'User validation failed') {
       console.log(': validator : ', error._message);
       //
-      res.status(406).json({
-        message: 'Vous devez choisir 3 thèmes.',
-      });
+      res
+        .status(406)
+        .json({ input: 'themes', message: 'Vous devez choisir 3 thèmes.' });
     } else {
       console.log(error, 'error au sign up');
       next(error);
