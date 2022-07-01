@@ -76,15 +76,16 @@ module.exports.SignAndLogErrors = (
   }
 
   if (errMessage === 'notFound') {
-    errors.message = ` No user registered with this email address ("${email}") `;
+    errors.message = `Aucun utilisateur enregistré avec cet e-mail("${email}") `;
     errors.email = email;
     errors.input = 'email';
   }
 
   if (errMessage === 'wrong') {
     errors.message =
-      'Wrong credentials, please check email address and password';
+      'Adresse e-mail ou mot de passe incorrect, vérifiez votre saisie.';
     errors.email = email;
+    errors.input = 'wrong';
   }
 
   //   if (err.code === 11000 && Object.keys(err.keyValue)[0].includes("pseudo"))
