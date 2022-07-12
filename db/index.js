@@ -7,10 +7,12 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const MONGO_URI = process.env.MONGODB_URI;
+const { MONGO_URI, MONGO_URI_DEV } = require('../utils/consts');
+
+const DB_URI = process.env.ENV === 'DEV' ? MONGO_URI_DEV : MONGO_URI;
 
 mongoose
-  .connect(MONGO_URI)
+  .connect(DB_URI)
   .then((x) => {
     console.log(
       `Connected to Mongo! Database name: "${x.connections[0].name}"`

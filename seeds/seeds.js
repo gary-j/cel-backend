@@ -7,10 +7,12 @@ const { faker } = require('@faker-js/faker');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const { MONGO_URI } = require('../utils/consts');
+const { MONGO_URI_DEV, MONGO_URI } = require('../utils/consts');
+
+const DB_URI = process.env.ENV === 'DEV' ? MONGO_URI_DEV : MONGO_URI;
 
 mongoose
-  .connect(MONGO_URI)
+  .connect(DB_URI)
   .then(async (x) => {
     console.log(
       `Connected to Mongo Gary! Database name: '${x.connections[0].name}'`
