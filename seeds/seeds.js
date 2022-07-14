@@ -63,8 +63,6 @@ function generateFakeUsers(quantity, themesDB) {
   for (let i = 0; i < quantity; i++) {
     const selected3Themes = getRandomFromArray(themesDB, 3);
     const most3ActiveThemes = getRandomFromArray(themesDB, 3);
-    console.log('selected 3 ** : ', selected3Themes);
-    // console.log('most active 3 ** : ', most3ActiveThemes);
     //
     const lastname = faker.name.lastName();
     const firstname = faker.name.firstName();
@@ -76,7 +74,7 @@ function generateFakeUsers(quantity, themesDB) {
       email: `${firstname}-${lastname}@test.com`.toLowerCase(),
       password: 'password',
       dateOfBirth: faker.date.birthdate({ min: 18, max: 72, mode: 'age' }),
-      biography: faker.word.adjective(),
+      biography: faker.random.words(10),
       selectedThemes: selected3Themes,
       mostActiveThemes: most3ActiveThemes,
       followers: null,
@@ -94,15 +92,81 @@ function generateFakeUsers(quantity, themesDB) {
   }
   return users;
 }
+// create fake stories to insert in DB
+function generateFakeStories(quantity, usersDB, themesDB, professionalsDB) {
+  const stories = [];
+  for (let i = 0; i < quantity; i++) {
+    const writter = usersDB[Math.floor(Math.random() * usersDB.length)];
+    const theme = themesDB[Math.floor(Math.random() * themesDB.length)];
+    const professional =
+      professionalsDB[Math.floor(Math.random() * professionalsDB.length)];
+    //
+    let story = {
+      writter: writter._id,
+      theme: theme._id,
+      title: faker.random.words(5),
+      content: faker.random.words(100),
+      professionalConsulted: professional,
+      ressources: null,
+      physicalTransformation: {
+        isSelected: true,
+        bodyPart: null,
+        treatment: faker.random.words(),
+        beforePictureUrl: faker.internet.url(),
+        afterPictureUrl: faker.internet.url(),
+        isSatisfied: i % 6 === 0 ? true : false,
+        isAnonym: i % 7 === 0 ? true : false,
+      },
+      comments: null,
+      isReported: false,
+    };
+    stories.push(story);
+  }
+  return stories;
+}
+// binding stories to the right user
+async function bindingStoriesToUser(storiesDB) {
+  for (let i = 0; i < storiesDB.length; i++) {
+    let user = await User.findByIdAndUpdate(
+      storiesDB[i].writter,
+      {
+        $push: {
+          stories: {
+            $each: [storiesDB[i]._id],
+            $position: 0,
+          },
+        },
+      },
+      { new: true }
+    );
+    // let userStories = user.stories;
+
+    // console.log('user trouvé par la story.writter : ', user);
+    // console.log('les stories de user : ', userStories);
+  }
+}
+//
 async function seedDB() {
   try {
     await Professional.deleteMany();
     await User.deleteMany();
+    await Story.deleteMany();
+    //
     const professionals = generateFakeProfessionals(30);
     const professionalsDB = await Professional.create(professionals);
     themesFromDB = await Theme.find();
-    const users = generateFakeUsers(10, themesFromDB);
+    const users = generateFakeUsers(100, themesFromDB);
     const usersDB = await User.create(users);
+    //
+    const stories = generateFakeStories(
+      400,
+      usersDB,
+      themesFromDB,
+      professionalsDB
+    );
+    const storiesDB = await Story.create(stories);
+    //
+    const binding = await bindingStoriesToUser(storiesDB);
   } catch (error) {
     console.log(`An error occurred while creating users from the DB: ${error}`);
   }

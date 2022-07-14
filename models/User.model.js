@@ -53,9 +53,7 @@ const userSchema = new Schema(
     mostActiveThemes: [
       {
         type: Schema.Types.ObjectId,
-        // type: String,
         ref: 'Theme',
-        maxlength: 3,
       },
     ],
     followers: {
@@ -126,7 +124,7 @@ userSchema.methods.setThreeThemesMax = function () {
 };
 
 userSchema.path('selectedThemes').validate(function (value) {
-  console.log(value.length, ': longueur');
+  // console.log(value.length, ': longueur');
   if (value.length !== 3) {
     throw new Error('Vous devez choisir 3 themes au maximum');
   }
