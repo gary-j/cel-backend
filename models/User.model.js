@@ -52,10 +52,8 @@ const userSchema = new Schema(
     ],
     mostActiveThemes: [
       {
-        // type: Schema.Types.ObjectId,
-        type: String,
+        type: Schema.Types.ObjectId,
         ref: 'Theme',
-        maxlength: 3,
       },
     ],
     followers: {
@@ -79,10 +77,6 @@ const userSchema = new Schema(
       default: false,
       // required: true,
     },
-    isRegistered: {
-      type: Boolean,
-      default: false,
-    },
     isModerator: {
       type: Boolean,
       default: false,
@@ -99,10 +93,12 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    stories: {
-      type: Schema.Types.ObjectId,
-      ref: 'Story',
-    },
+    stories: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Story',
+      },
+    ],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
@@ -128,7 +124,7 @@ userSchema.methods.setThreeThemesMax = function () {
 };
 
 userSchema.path('selectedThemes').validate(function (value) {
-  console.log(value.length, ': longueur');
+  // console.log(value.length, ': longueur');
   if (value.length !== 3) {
     throw new Error('Vous devez choisir 3 themes au maximum');
   }

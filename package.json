@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "seeds": "node ./seeds/seeds.js",
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
@@ -20,6 +21,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.3.0",
     "nodemon": "^2.0.16"
   }
 }

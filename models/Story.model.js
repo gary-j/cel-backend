@@ -31,15 +31,18 @@ const storySchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Ressource',
     },
-    bodyPart: {
-      type: Schema.Types.ObjectId,
-      ref: 'BodyPart',
+    physicalTransformation: {
+      isSelected: Boolean,
+      bodyPart: {
+        type: Schema.Types.ObjectId,
+        ref: 'BodyPart',
+      },
+      treatment: String,
+      beforePictureUrl: String,
+      afterPictureUrl: String,
+      isSatisfied: Boolean,
+      isAnonym: Boolean,
     },
-    treatment: String,
-    beforePictureUrl: String,
-    afterPictureUrl: String,
-    isSatisfied: Boolean,
-    isAnonym: Boolean,
     comments: {
       type: Schema.Types.ObjectId,
       ref: 'Comment',
