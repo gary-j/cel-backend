@@ -36,7 +36,7 @@ function generateFakeProfessionals(quantity) {
       zipcode: faker.address.zipCode('#####'),
       city: faker.address.cityName(),
       country: faker.address.country(),
-      domain: `www.dr-${profName.toLowerCase()}.com`,
+      domain: faker.lorem.words(2),
     };
     professionals.push(professional);
   }
@@ -105,7 +105,7 @@ function generateFakeStories(quantity, usersDB, themesDB, professionalsDB) {
       writter: writter._id,
       theme: theme._id,
       title: faker.random.words(5),
-      content: faker.random.words(100),
+      content: faker.lorem.paragraphs(5),
       professionalConsulted: professional,
       ressources: null,
       physicalTransformation: {
