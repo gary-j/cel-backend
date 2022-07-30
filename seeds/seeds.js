@@ -108,6 +108,7 @@ function generateFakeStories(quantity, usersDB, themesDB, professionalsDB) {
       content: faker.lorem.paragraphs(5),
       professionalConsulted: professional,
       ressources: null,
+      isAnonym: i % 3 === 0 ? true : false,
       physicalTransformation: {
         isSelected: true,
         bodyPart: null,
@@ -115,7 +116,6 @@ function generateFakeStories(quantity, usersDB, themesDB, professionalsDB) {
         beforePictureUrl: faker.internet.url(),
         afterPictureUrl: faker.internet.url(),
         isSatisfied: i % 6 === 0 ? true : false,
-        isAnonym: i % 7 === 0 ? true : false,
       },
       comments: null,
       isReported: false,
