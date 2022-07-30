@@ -31,6 +31,7 @@ const storySchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Ressource',
     },
+    isAnonym: Boolean,
     physicalTransformation: {
       isSelected: Boolean,
       bodyPart: {
@@ -41,7 +42,6 @@ const storySchema = new Schema(
       beforePictureUrl: String,
       afterPictureUrl: String,
       isSatisfied: Boolean,
-      isAnonym: Boolean,
     },
     comments: {
       type: Schema.Types.ObjectId,
