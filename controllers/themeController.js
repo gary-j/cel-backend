@@ -4,7 +4,7 @@ const Theme = require('../models/Theme.model');
 const theme_get = async (req, res, next) => {
   // console.log('appel ok theme_get');
   try {
-    const allthemes = await Theme.find();
+    const allthemes = await Theme.find().sort({ name: 1 });
 
     console.log('les themes trouvés *** : ', allthemes);
 
