@@ -13,6 +13,12 @@ const stories_get = async (req, res, next) => {
   res.status(200).json(stories);
 };
 
+const createStory_post = async (req, res, next) => {
+  console.log('Create Story Post Route ok !');
+  res.status(200).json({ message: 'Create Story Post Route ok !' });
+};
+
 module.exports = {
   stories_get,
+  createStory_post,
 };
