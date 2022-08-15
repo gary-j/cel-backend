@@ -36,6 +36,9 @@ app.use('/api/theme', themeRoutes);
 const storyRoutes = require('./routes/story.routes.js');
 app.use('/api/story', storyRoutes);
 
+const professionalRoutes = require('./routes/professional.routes');
+app.use('/api/professional', professionalRoutes);
+
 // const adminRoutes = require('./routes/admin.routes');
 // app.use('/api/admin', isAuthenticated, adminRoutes);
 
