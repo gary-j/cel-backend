@@ -28,10 +28,14 @@ mongoose
 // create fake professionals to insert in DB
 function generateFakeProfessionals(quantity) {
   const professionals = [];
+  const titre = ['Dr.', 'Me.', 'Pr.', 'Aud.', 'Coach'];
   for (let i = 0; i < quantity; i++) {
     const profName = faker.name.lastName();
+    const profFirstname = faker.name.firstName();
     let professional = {
+      titre: titre[Math.floor(Math.random() * titre.length)],
       name: profName,
+      firstname: profFirstname,
       address: faker.address.streetAddress(true),
       zipcode: faker.address.zipCode('#####'),
       city: faker.address.cityName(),

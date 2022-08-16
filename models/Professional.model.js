@@ -10,7 +10,9 @@ const professionalSchema = new Schema(
       ref: 'User',
     },
     // voir fichier excel
+    titre: { type: String, enum: ['Dr.', 'Me.', 'Pr.', 'Aud.'] },
     name: String,
+    firstname: String,
     address: String,
     zipcode: String,
     city: String,
