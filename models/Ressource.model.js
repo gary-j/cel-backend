@@ -17,12 +17,11 @@ const ressourceSchema = new Schema(
         'podcast',
         'serie',
       ],
-      maxlength: 1,
     },
     follower: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      // required: true,
     },
     title: String,
     author: String,
