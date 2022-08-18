@@ -9,6 +9,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const { MONGO_URI_DEV, MONGO_URI } = require('../utils/consts');
+const Ressource = require('../models/Ressource.model');
 
 const DB_URI = process.env.ENV === 'DEV' ? MONGO_URI_DEV : MONGO_URI;
 
@@ -96,14 +97,49 @@ function generateFakeUsers(quantity, themesDB) {
   }
   return users;
 }
+// create fake ressources to insert in DB
+function generateFakeRessources(quantity) {
+  const ressources = [];
+  for (let i = 0; i < quantity; i++) {
+    let media = [
+      'citation',
+      'film',
+      'influenceur',
+      'livre',
+      'musique',
+      'podcast',
+      'serie',
+    ];
+    const url = faker.internet.url();
+    let ressource = {
+      mediaType: media[Math.floor(Math.random() * media.length)],
+      title: faker.lorem.sentence(4),
+      author: faker.name.findName(
+        undefined,
+        undefined,
+        i % 2 === 0 ? 'male' : 'female'
+      ),
+      url: url,
+    };
+    ressources.push(ressource);
+  }
+  return ressources;
+}
 // create fake stories to insert in DB
-function generateFakeStories(quantity, usersDB, themesDB, professionalsDB) {
+function generateFakeStories(
+  quantity,
+  usersDB,
+  themesDB,
+  professionalsDB,
+  ressourcesDB
+) {
   const stories = [];
   for (let i = 0; i < quantity; i++) {
     const writter = usersDB[Math.floor(Math.random() * usersDB.length)];
     const theme = themesDB[Math.floor(Math.random() * themesDB.length)];
     const professional =
       professionalsDB[Math.floor(Math.random() * professionalsDB.length)];
+    const ressource = ressourcesDB[i]?._id;
     //
     let story = {
       writter: writter._id,
@@ -112,6 +148,7 @@ function generateFakeStories(quantity, usersDB, themesDB, professionalsDB) {
       content: faker.lorem.paragraphs(5),
       professionalConsulted: professional,
       ressources: null,
+      ressource: ressource ? ressource : null,
       isAnonym: i % 3 === 0 ? true : false,
       physicalTransformation: {
         isSelected: true,
@@ -162,11 +199,15 @@ async function seedDB() {
     const users = generateFakeUsers(100, themesFromDB);
     const usersDB = await User.create(users);
     //
+    const ressources = generateFakeRessources(400); // stories could not have ressource
+    const ressourcesDB = await Ressource.create(ressources);
+    //
     const stories = generateFakeStories(
       400,
       usersDB,
       themesFromDB,
-      professionalsDB
+      professionalsDB,
+      ressourcesDB
     );
     const storiesDB = await Story.create(stories);
     //
