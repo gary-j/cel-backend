@@ -16,16 +16,24 @@ const ressourceSchema = new Schema(
         'musique',
         'podcast',
         'serie',
+        'video',
       ],
     },
-    follower: {
+    theme: {
       type: Schema.Types.ObjectId,
-      ref: 'User',
-      // required: true,
+      ref: 'Theme',
     },
+    fans: [{ type: Schema.Types.ObjectId, ref: 'FanRessource' }],
     title: String,
     author: String,
+    actor1: String,
+    actor2: String,
+    artist: String,
+    influencer: String,
     url: String,
+    url2: String,
+    why: String,
+    complete: Object,
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
