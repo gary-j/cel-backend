@@ -112,19 +112,24 @@ function generateFakeRessources(quantity) {
       'video',
     ];
     const url = faker.internet.url();
+    const mediaType = media[Math.floor(Math.random() * media.length)];
     let ressource = {
-      mediaType: media[Math.floor(Math.random() * media.length)],
+      mediaType: mediaType,
       title: faker.lorem.sentence(4),
       author: faker.name.findName(
         undefined,
         undefined,
         i % 2 === 0 ? 'male' : 'female'
       ),
-      url: url,
       complete: {
-        type: 'same as mediatype',
-        content: faker.lorem.sentence(5),
-        auteur: faker.name.findName(),
+        [mediaType]: {
+          phrase: 'test gary',
+          url: url,
+        },
+
+        // type: 'same as mediatype',
+        // content: faker.lorem.sentence(5),
+        // auteur: faker.name.findName(),
       },
     };
     ressources.push(ressource);

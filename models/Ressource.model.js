@@ -33,7 +33,36 @@ const ressourceSchema = new Schema(
     url: String,
     url2: String,
     why: String,
-    complete: Object,
+    complete: {
+      type: Object,
+      validate: (object) => {
+        //our custom validator, object is the provided object
+        let allowedKeys = [
+          'citation',
+          'film',
+          'influenceur',
+          'livre',
+          'musique',
+          'podcast',
+          'serie',
+          'video',
+        ];
+        let correctKeys = Object.keys(object).every((key) =>
+          allowedKeys.includes(key)
+        ); //make sure all keys are inside `allowedKeys`
+
+        // let min = 5;
+        // let max = 10;
+        // let correctValues = Object.values(object).every(
+        //   (value) => value > min && value < max
+        // );
+        //make sure all values are in correct range
+
+        return correctKeys;
+        // && correctValues;
+        //return true if keys and values pass validation
+      },
+    },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
