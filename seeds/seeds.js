@@ -109,17 +109,28 @@ function generateFakeRessources(quantity) {
       'musique',
       'podcast',
       'serie',
+      'video',
     ];
     const url = faker.internet.url();
+    const mediaType = media[Math.floor(Math.random() * media.length)];
     let ressource = {
-      mediaType: media[Math.floor(Math.random() * media.length)],
+      mediaType: mediaType,
       title: faker.lorem.sentence(4),
       author: faker.name.findName(
         undefined,
         undefined,
         i % 2 === 0 ? 'male' : 'female'
       ),
-      url: url,
+      complete: {
+        [mediaType]: {
+          phrase: 'test gary',
+          url: url,
+        },
+
+        // type: 'same as mediatype',
+        // content: faker.lorem.sentence(5),
+        // auteur: faker.name.findName(),
+      },
     };
     ressources.push(ressource);
   }
@@ -139,7 +150,7 @@ function generateFakeStories(
     const theme = themesDB[Math.floor(Math.random() * themesDB.length)];
     const professional =
       professionalsDB[Math.floor(Math.random() * professionalsDB.length)];
-    const ressource = ressourcesDB[i]?._id;
+    const ressource = i % 2 === 0 ? ressourcesDB[i]?._id : null;
     //
     let story = {
       writter: writter._id,
@@ -192,6 +203,7 @@ async function seedDB() {
     await Professional.deleteMany();
     await User.deleteMany();
     await Story.deleteMany();
+    await Ressource.deleteMany();
     //
     const professionals = generateFakeProfessionals(30);
     const professionalsDB = await Professional.create(professionals);
