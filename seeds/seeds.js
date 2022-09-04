@@ -126,10 +126,9 @@ function generateFakeRessources(quantity) {
           phrase: 'test gary',
           url: url,
         },
-
-        // type: 'same as mediatype',
-        // content: faker.lorem.sentence(5),
-        // auteur: faker.name.findName(),
+      },
+      physicalTransformation: {
+        bodyPart: 'ear',
       },
     };
     ressources.push(ressource);
