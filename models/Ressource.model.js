@@ -24,15 +24,6 @@ const ressourceSchema = new Schema(
       ref: 'Theme',
     },
     fans: [{ type: Schema.Types.ObjectId, ref: 'FanRessource' }],
-    title: String,
-    author: String,
-    actor1: String,
-    actor2: String,
-    artist: String,
-    influencer: String,
-    url: String,
-    url2: String,
-    why: String,
     complete: {
       type: Object,
       required: true,
@@ -65,6 +56,29 @@ const ressourceSchema = new Schema(
           //return true if keys and values pass validation
         },
         'La clé doit etre un type de ressource autorisé, ex : "livre".',
+      ],
+      // url: String,
+      // url2: String,
+      // why: String,
+    },
+
+    physicalTransformation: {
+      type: Object,
+      validate: [
+        (object) => {
+          let allowedKeys = [
+            'bodyPart',
+            'treatment',
+            'beforeUrl',
+            'afterUrl',
+            'isSatisfied',
+          ];
+          let correctKeys = Object.keys(object).every((key) =>
+            allowedKeys.includes(key)
+          );
+          return correctKeys;
+        },
+        'La clé ne fait pas parti de la liste autorisée, ex : "bodyPart".',
       ],
     },
   },
