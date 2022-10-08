@@ -152,6 +152,7 @@ function generateFakeStories(
     const professional =
       professionalsDB[Math.floor(Math.random() * professionalsDB.length)];
     const ressource = i % 2 === 0 ? ressourcesDB[i]?._id : null;
+    const isSelected = i % 3 === 0 ? true : false;
     //
     let story = {
       writter: writter._id,
@@ -163,11 +164,11 @@ function generateFakeStories(
       ressource: ressource ? ressource : null,
       isAnonym: i % 3 === 0 ? true : false,
       physicalTransformation: {
-        isSelected: i % 3 === 0 ? true : false,
+        isSelected: isSelected,
         bodyPart: null,
-        treatment: faker.random.words(),
-        beforePictureUrl: faker.internet.url(),
-        afterPictureUrl: faker.internet.url(),
+        treatment: isSelected ? faker.random.words() : null,
+        beforePictureUrl: isSelected ? faker.internet.url() : null,
+        afterPictureUrl: isSelected ? faker.internet.url() : null,
         isSatisfied: i % 6 === 0 ? true : false,
       },
       comments: null,
