@@ -67,7 +67,7 @@ const ressourceSchema = new Schema(
       validate: [
         (object) => {
           let allowedKeys = [
-            'bodyPart',
+            'bodyPart', // doit recevoir un Object.Id du formulaire
             'treatment',
             'beforeUrl',
             'afterUrl',
