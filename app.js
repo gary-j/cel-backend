@@ -33,12 +33,14 @@ app.use('/api/auth', authRoutes);
 const themeRoutes = require('./routes/theme.routes');
 app.use('/api/theme', themeRoutes);
 
-const storyRoutes = require('./routes/story.routes.js');
+const storyRoutes = require('./routes/story.routes');
 app.use('/api/story', storyRoutes);
 
 const professionalRoutes = require('./routes/professional.routes');
 app.use('/api/professional', professionalRoutes);
 
+const bodyPartRoutes = require('./routes/bodyPart.routes');
+app.use('/api/bodypart', bodyPartRoutes);
 // const adminRoutes = require('./routes/admin.routes');
 // app.use('/api/admin', isAuthenticated, adminRoutes);
 
