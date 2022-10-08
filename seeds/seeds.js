@@ -3,15 +3,17 @@ const User = require('../models/User.model');
 const Professional = require('../models/Professional.model');
 const Story = require('../models/Story.model');
 const Theme = require('../models/Theme.model');
+const Ressource = require('../models/Ressource.model');
+const BodyPart = require('../models/BodyPart.model');
 const { faker } = require('@faker-js/faker/locale/fr');
-
+const { bodyPartsArray } = require('./data-bodyParts');
 const dotenv = require('dotenv');
 dotenv.config();
 
 const { MONGO_URI_DEV, MONGO_URI } = require('../utils/consts');
-const Ressource = require('../models/Ressource.model');
 
 const DB_URI = process.env.ENV === 'DEV' ? MONGO_URI_DEV : MONGO_URI;
+//
 
 mongoose
   .connect(DB_URI)
@@ -161,7 +163,7 @@ function generateFakeStories(
       ressource: ressource ? ressource : null,
       isAnonym: i % 3 === 0 ? true : false,
       physicalTransformation: {
-        isSelected: true,
+        isSelected: i % 3 === 0 ? true : false,
         bodyPart: null,
         treatment: faker.random.words(),
         beforePictureUrl: faker.internet.url(),
@@ -176,7 +178,7 @@ function generateFakeStories(
   return stories;
 }
 // binding stories to the right user
-async function bindingStoriesToUser(storiesDB) {
+async function bindStoriesToUser(storiesDB) {
   for (let i = 0; i < storiesDB.length; i++) {
     let user = await User.findByIdAndUpdate(
       storiesDB[i].writter,
@@ -196,6 +198,27 @@ async function bindingStoriesToUser(storiesDB) {
     // console.log('les stories de user : ', userStories);
   }
 }
+// binding physical transformation with bodypart
+async function bindTransformationToBodyPart(storiesArray, bodyPartsArray) {
+  for (let i = 0; i < storiesArray.length; i++) {
+    if (storiesArray[i].physicalTransformation.isSelected) {
+      let bodyPart =
+        bodyPartsArray[Math.floor(Math.random() * bodyPartsArray.length)];
+      let updatedStory = await Story.findByIdAndUpdate(
+        storiesArray[i]._id,
+        {
+          $set: {
+            physicalTransformation: {
+              isSelected: true,
+              bodyPart: bodyPart._id,
+            },
+          },
+        },
+        { new: true }
+      );
+    }
+  }
+}
 //
 async function seedDB() {
   try {
@@ -203,6 +226,9 @@ async function seedDB() {
     await User.deleteMany();
     await Story.deleteMany();
     await Ressource.deleteMany();
+    await BodyPart.deleteMany();
+    //
+    const bodyPartsDB = await BodyPart.create(bodyPartsArray);
     //
     const professionals = generateFakeProfessionals(30);
     const professionalsDB = await Professional.create(professionals);
@@ -222,7 +248,11 @@ async function seedDB() {
     );
     const storiesDB = await Story.create(stories);
     //
-    const binding = await bindingStoriesToUser(storiesDB);
+    const bindingStoriesWithUser = await bindStoriesToUser(storiesDB);
+    const bindingTransformationToBodyPart = await bindTransformationToBodyPart(
+      storiesDB,
+      bodyPartsDB
+    );
   } catch (error) {
     console.log(`An error occurred while creating users from the DB: ${error}`);
   }
