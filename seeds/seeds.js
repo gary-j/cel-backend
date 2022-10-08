@@ -208,10 +208,7 @@ async function bindTransformationToBodyPart(storiesArray, bodyPartsArray) {
         storiesArray[i]._id,
         {
           $set: {
-            physicalTransformation: {
-              isSelected: true,
-              bodyPart: bodyPart._id,
-            },
+            'physicalTransformation.bodyPart': bodyPart._id,
           },
         },
         { new: true }
