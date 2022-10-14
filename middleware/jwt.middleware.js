@@ -12,7 +12,10 @@ const isAuthenticated = (req, res, next) => {
       console.log('  *** isAuthenticate : pas de token/user dans headers ***');
       res
         .status(401)
-        .json({ authenticated: false, message: 'error, aucun token/user' });
+        .json({
+          authenticated: false,
+          message: 'error, there is no token or connected user',
+        });
     }
     if (token) {
       console.log('*** LE TOKEN à vérifier *** : ', token);
