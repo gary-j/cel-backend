@@ -2,10 +2,16 @@ const MONGO_URI = process.env.MONGODB_URI || '';
 const MONGO_URI_DEV = process.env.MONGODB_URI_DEV;
 const PORT = process.env.PORT || 5005;
 const TOKEN_SECRET = process.env.TOKEN_SECRET;
+const IMAGEKIT_URL_ENDPOINT = process.env.IMAGEKIT_URL_ENDPOINT;
+const IMAGEKIT_PUBLIC_KEY = process.env.IMAGEKIT_PUBLIC_KEY;
+const IMAGEKIT_PRIVATE_KEY = process.env.IMAGEKIT_PRIVATE_KEY;
 
 module.exports = {
   MONGO_URI,
   MONGO_URI_DEV,
   PORT,
   TOKEN_SECRET,
+  IMAGEKIT_PRIVATE_KEY,
+  IMAGEKIT_PUBLIC_KEY,
+  IMAGEKIT_URL_ENDPOINT,
 };
