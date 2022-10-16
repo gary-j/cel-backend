@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jsonwebtoken = require('jsonwebtoken');
 const User = require('../models/User.model');
 const { SignAndLogErrors } = require('../error-handling/SignAndLogErrors');
+const { imagekit } = require('../utils/imagekit');
 
 const signup_get = async (req, res, next) => {
   console.log('access to sign up route');
@@ -338,7 +339,18 @@ const verify_get = async (req, res, next) => {
     return;
   }
 };
-// //
+//
+const imagekit_get = async (req, res, next) => {
+  try {
+    // console.log('req.headers.authorization : ', req.headers?.authorization);
+    let result = imagekit.getAuthenticationParameters();
+    res.status(200).json(result);
+  } catch (error) {
+    console.log('Erreur authentification ImageKit : ', error);
+    next(error);
+  }
+};
+//
 module.exports = {
   preSignup_post,
   signup_post,
@@ -347,4 +359,5 @@ module.exports = {
   signin_post,
   signout_post,
   verify_get,
+  imagekit_get,
 };
