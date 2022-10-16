@@ -27,7 +27,7 @@ module.exports = (app) => {
   app.use(
     cors({
       credentials: true,
-      origin: corsOrigin,
+      origin: 'https://www.citronenlimonade.com',
       // origin: process.env.ORIGIN || 'http://localhost:3000',
     })
   );
