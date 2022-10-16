@@ -1,3 +1,5 @@
+// ℹ️ Gets access to environment variables/settings
+require('dotenv/config');
 // We reuse this import in order to have access to the `body` property in requests
 const express = require('express');
 
@@ -23,8 +25,8 @@ module.exports = (app) => {
   app.use(
     cors({
       credentials: true,
-      origin: '*',
-      // origin: process.env.ORIGIN || 'http://localhost:3000',
+      // origin: '*',
+      origin: process.env.ORIGIN || 'http://localhost:3000',
     })
   );
 
