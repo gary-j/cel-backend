@@ -3,19 +3,17 @@ const jwt = require('jsonwebtoken');
 const SECRET = process.env.TOKEN_SECRET;
 
 const isAuthenticated = (req, res, next) => {
-  console.log('  *** isAuthenticate /verify ***');
+  console.log('  *** isAuthenticate /verify *** :');
 
   const token = req.headers.authorization?.split(' ')[1];
 
   try {
     if (!req.headers.authorization) {
       console.log('  *** isAuthenticate : pas de token/user dans headers ***');
-      res
-        .status(401)
-        .json({
-          authenticated: false,
-          message: 'error, there is no token or connected user',
-        });
+      res.status(401).json({
+        authenticated: false,
+        message: 'error, there is no token or connected user',
+      });
     }
     if (token) {
       console.log('*** LE TOKEN à vérifier *** : ', token);
