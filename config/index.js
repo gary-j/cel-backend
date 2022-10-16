@@ -12,10 +12,6 @@ const cookieParser = require('cookie-parser');
 // ℹ️ Needed to accept from requests from 'the outside'. CORS stands for cross origin resource sharing
 // unless the request if from the same domain, by default express wont accept POST requests
 const cors = require('cors');
-const corsOrigin =
-  process.env.ENV === 'DEV'
-    ? 'http://localhost:3000'
-    : ['https://www.citronenlimonade.com', 'https://www.citronenlimonade.fr'];
 
 // Middleware configuration
 module.exports = (app) => {
@@ -24,13 +20,32 @@ module.exports = (app) => {
   app.set('trust proxy', 1);
 
   // controls a very specific header to pass headers from the frontend
-  app.use(
-    cors({
-      credentials: true,
-      origin: 'https://www.citronenlimonade.com',
-      // origin: process.env.ORIGIN || 'http://localhost:3000',
-    })
-  );
+  // app.use(
+  // cors({
+  //   credentials: true,
+  //   origin: process.env.ORIGIN || 'http://localhost:3000',
+  // })
+  // );
+
+  app.use((req, res, next) => {
+    res.header(
+      'Access-Control-Allow-Origin',
+      'https://www.citronenlimonade.com'
+    );
+    res.header(
+      'Access-Control-Allow-Headers',
+      'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    );
+    if (req.method === 'OPTIONS') {
+      res.header(
+        'Access-Control-Allow-Methods',
+        'GET,HEAD,PUT,PATCH,POST,UPDATE,DELETE'
+      );
+      return res.status(200).json({});
+    }
+
+    next();
+  });
 
   // In development environment the app logs
   app.use(logger('dev'));
