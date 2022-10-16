@@ -5,6 +5,7 @@ const Story = require('../models/Story.model');
 const Theme = require('../models/Theme.model');
 const Ressource = require('../models/Ressource.model');
 const BodyPart = require('../models/BodyPart.model');
+const bcrypt = require('bcryptjs');
 const { faker } = require('@faker-js/faker/locale/fr');
 const { bodyPartsArray } = require('./data-bodyParts');
 const dotenv = require('dotenv');
@@ -65,7 +66,7 @@ function getRandomFromArray(arr, n) {
   return result;
 }
 // create fake users to insert in DB
-function generateFakeUsers(quantity, themesDB) {
+function generateFakeUsers(quantity, themesDB, password) {
   const users = [];
   for (let i = 0; i < quantity; i++) {
     const selected3Themes = getRandomFromArray(themesDB, 3);
@@ -79,7 +80,7 @@ function generateFakeUsers(quantity, themesDB) {
       firstname: firstname,
       username: `${firstname}-${i}`,
       email: `${firstname}-${lastname}@test.com`.toLowerCase(),
-      password: 'password',
+      password: password,
       dateOfBirth: faker.date.birthdate({ min: 18, max: 72, mode: 'age' }),
       biography: faker.random.words(10),
       selectedThemes: selected3Themes,
@@ -230,8 +231,12 @@ async function seedDB() {
     //
     const professionals = generateFakeProfessionals(30);
     const professionalsDB = await Professional.create(professionals);
+    //
+    const salt = await bcrypt.genSalt(2);
+    const hashedPassword = await bcrypt.hash('password', salt);
+    //
     themesFromDB = await Theme.find();
-    const users = generateFakeUsers(100, themesFromDB);
+    const users = generateFakeUsers(100, themesFromDB, hashedPassword);
     const usersDB = await User.create(users);
     //
     const ressources = generateFakeRessources(400); // stories could not have ressource
