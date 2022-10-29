@@ -10,6 +10,20 @@ const imagekit = new ImageKit({
   publicKey: IMAGEKIT_PUBLIC_KEY,
   privateKey: IMAGEKIT_PRIVATE_KEY,
 });
+//
+imagekit.createCustomMetadataField(
+  {
+    name: 'userId',
+    label: 'userId',
+    schema: {
+      type: 'Text',
+    },
+  },
+  function (error, result) {
+    if (error) console.log(error);
+    else console.log(result);
+  }
+);
 
 module.exports = {
   imagekit,

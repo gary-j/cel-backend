@@ -343,6 +343,7 @@ const verify_get = async (req, res, next) => {
 const imagekit_get = async (req, res, next) => {
   try {
     // console.log('req.headers.authorization : ', req.headers?.authorization);
+
     let result = imagekit.getAuthenticationParameters();
     res.status(200).json(result);
   } catch (error) {

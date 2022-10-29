@@ -17,6 +17,10 @@ router.post('/signout', authController.signout_post);
 
 router.get('/verify', isAuthenticated, authController.verify_get);
 
-router.get('/imagekit', isAuthenticated, authController.imagekit_get);
+router.get(
+  '/imagekit',
+  // isAuthenticated,
+  authController.imagekit_get
+);
 
 module.exports = router;
