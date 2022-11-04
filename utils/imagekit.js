@@ -18,6 +18,11 @@ imagekit.createCustomMetadataField(
     schema: {
       type: 'Text',
     },
+    name: 'photo',
+    label: 'photo',
+    schema: {
+      type: 'Text',
+    },
   },
   function (error, result) {
     if (error) console.log(error);
