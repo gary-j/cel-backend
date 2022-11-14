@@ -111,8 +111,8 @@ function generateFakeRessources(quantity) {
       'livre',
       'musique',
       'podcast',
-      'serie',
-      'video',
+      'série',
+      'vidéo',
     ];
     const url = faker.internet.url();
     const mediaType = media[Math.floor(Math.random() * media.length)];
