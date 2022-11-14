@@ -15,8 +15,8 @@ const ressourceSchema = new Schema(
         'livre',
         'musique',
         'podcast',
-        'serie',
-        'video',
+        'série',
+        'vidéo',
       ],
     },
     theme: {
@@ -37,8 +37,8 @@ const ressourceSchema = new Schema(
             'livre',
             'musique',
             'podcast',
-            'serie',
-            'video',
+            'série',
+            'vidéo',
           ];
           let correctKeys = Object.keys(object).every((key) =>
             allowedKeys.includes(key)
