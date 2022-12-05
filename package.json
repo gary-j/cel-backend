@@ -2,6 +2,8 @@
   "name": "cel-backend-server",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
+  "engines": {"node":"14.x"},
   "scripts": {
     "seeds": "node ./seeds/seeds.js",
     "start": "node server.js",
