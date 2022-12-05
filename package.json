@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "engines": {"node":"14.x"},
+  "engines": {"node":"18.x"},
   "scripts": {
     "seeds": "node ./seeds/seeds.js",
     "start": "node server.js",
