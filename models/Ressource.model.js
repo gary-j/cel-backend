@@ -68,9 +68,12 @@ const ressourceSchema = new Schema(
         (object) => {
           let allowedKeys = [
             'bodyPart', // doit recevoir un Object.Id du formulaire
+            'bodyPartName',
             'treatment',
-            'beforeUrl',
-            'afterUrl',
+            'beforePictureUrl',
+            'beforePictureName',
+            'afterPictureUrl',
+            'afterPictureName',
             'isSatisfied',
           ];
           let correctKeys = Object.keys(object).every((key) =>

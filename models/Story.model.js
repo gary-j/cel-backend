@@ -40,7 +40,9 @@ const storySchema = new Schema(
       },
       treatment: String,
       beforePictureUrl: String,
+      beforePictureName: String,
       afterPictureUrl: String,
+      afterPictureName: String,
       isSatisfied: Boolean,
     },
     comments: {
