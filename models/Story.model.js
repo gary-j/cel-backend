@@ -14,7 +14,7 @@ const storySchema = new Schema(
       ref: 'Theme',
       required: true,
     },
-    title: { type: String, required: true, maxlength: 150 },
+    title: { type: String, maxlength: 150 },
     slugTitle: {
       type: String,
       slug: 'title',

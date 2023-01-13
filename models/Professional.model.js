@@ -18,6 +18,7 @@ const professionalSchema = new Schema(
     city: String,
     country: String,
     domain: String,
+    verified: Boolean,
   },
   {
     timestamps: true,
