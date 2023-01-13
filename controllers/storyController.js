@@ -21,8 +21,38 @@ const stories_get = async (req, res, next) => {
 };
 
 const createStory_post = async (req, res, next) => {
-  console.log('Create Story Post Route ok !');
-  res.status(200).json({ message: 'Create Story Post Route ok !' });
+  try {
+    console.log('Create Story Post Route ok !');
+    const storyToCreate = req.body;
+    //
+    const createdStory = await Story.create(storyToCreate);
+    console.log('la story créée en bdd : ', createdStory);
+    //
+    if (storyToCreate.ressourceToCreate) {
+      const ressourceToCreate = {
+        ...storyToCreate.ressourceToCreate,
+        relatedStory: createdStory._id,
+        theme: createdStory.theme,
+      };
+      const createdRessource = await Ressource.create(ressourceToCreate);
+      console.log('created ress : ', createdRessource);
+      await Story.findByIdAndUpdate(createdStory._id, {
+        ressource: createdRessource._id,
+      });
+    }
+    //
+    if (storyToCreate.professionalToCreate !== null) {
+      const proToCreate = storyToCreate.professionalToCreate;
+      const createdPro = await Professional.create(proToCreate);
+      await Story.findByIdAndUpdate(createdStory._id, {
+        professionalConsulted: createdPro._id,
+      });
+    }
+    //
+    res.status(200).json({ message: 'Votre histoire a bien été postée !' });
+  } catch (error) {
+    console.log('error story post : ', error);
+  }
 };
 
 module.exports = {
