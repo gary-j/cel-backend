@@ -52,6 +52,17 @@ const createStory_post = async (req, res, next) => {
     res.status(200).json({ message: 'Votre histoire a bien été postée !' });
   } catch (error) {
     console.log('error story post : ', error);
+    if (error._message === 'Story validation failed') {
+      res
+        .status(406)
+        .json({
+          message: "Vous n'avez pas rempli tous les champs obligatoires",
+        });
+    } else {
+      console.log('ERREUR PUBLICATION STORY : ', error);
+      next(error);
+      return;
+    }
   }
 };
 
