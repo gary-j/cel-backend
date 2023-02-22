@@ -279,6 +279,7 @@ const signin_post = async (req, res, next) => {
         email: foundUser.email,
         username: foundUser.username,
         isAdmin: foundUser.isAdmin,
+        provider: false,
       };
 
       const authToken = jsonwebtoken.sign(payload, process.env.TOKEN_SECRET, {

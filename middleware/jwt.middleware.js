@@ -16,7 +16,7 @@ const isAuthenticated = (req, res, next) => {
       });
     }
     if (token) {
-      console.log('*** LE TOKEN à vérifier *** : ', token);
+      // console.log('*** LE TOKEN à vérifier *** : ', token);
       // 1. VERIFIER LA TOKEN BLACKLIST EN DB
       // if blacklistedToken === token
       // decoded.authenticated = false;
