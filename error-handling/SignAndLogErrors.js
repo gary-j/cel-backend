@@ -22,18 +22,25 @@ module.exports.SignAndLogErrors = (
     console.log('***Sign and log error NONE password *** : ', password);
     if (password === '') {
       errors.input = 'password';
+      errors.message =
+        'Entrez une combinaison d’au moins 6 lettres, chiffres et caractères spéciaux.';
     } else if (email === '') {
       errors.input = 'email';
+      errors.message = 'Merci de saisir votre adresse mail.';
     } else if (username === '') {
       errors.input = 'username';
+      errors.message = `Choisissez un nom d'utilisateur`;
     } else if (lastname === '') {
       errors.input = 'lastname';
+      errors.message = `Merci de fournir un ${errors.input}`;
     } else if (firstname === '') {
       errors.input = 'firstname';
+      errors.message = `Merci de fournir un ${errors.input}`;
     } else if (dateOfBirth === '') {
       errors.input = 'dateOfBirth';
+      errors.message = `Merci de fournir un ${errors.input}`;
     }
-    errors.message = `Merci de fournir un ${errors.input}`;
+    // errors.message = `Merci de fournir un ${errors.input}`;
     errors.username = username;
     errors.email = email;
     errors.lastname = lastname;
